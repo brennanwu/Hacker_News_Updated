@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Navbar, NavbarToggler, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarText} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './NavBar.css'
+
 
 const NavBar = (props) => {
     const [isOpen, setIsOpen] = useState(false);

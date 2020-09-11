@@ -37,10 +37,38 @@
   }
 }
 
-.lists {
+/* .lists {
   width: 100%;
   height: fit-content;
   padding: 5px;
   border: 1px solid black ;
+} */
+
+.lis {
+  margin-top: 16px;
+  padding: 0px;
+  margin-right: 0px;
+  width: 10%;
+  border: 1px solid black;
 }
 
+.upvotes {
+  width: 50px;
+}
+
+.title {
+  width: 350px;
+
+}
+
+.index{
+  width: 5px;
+}
+
+.login {
+  color: white;
+}
+
+/* .comment {
+
+} */

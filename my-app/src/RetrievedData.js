@@ -1,4 +1,7 @@
 import React from 'react';
+import {Table, Container} from 'reactstrap';
+import { BsFillCaretUpFill } from 'react-icons/bs';
+import NavBar from './NavBar';
 
 class RetrievedData extends React.Component  { 
     constructor(props) { 
@@ -24,16 +27,21 @@ class RetrievedData extends React.Component  {
         const list = this.state.data; 
         return ( 
             <div className="display">
-                {list.map(item => <div key={item._id} className="lists">
-                <span className="lis">{item.title}</span>
-                <span className="lis">{item.upvotes}</span>
-                <span className="lis">{item.txt_body}</span>
-                <span className="lis">{item.comment}</span>
-                </div>
-                )}
+                <NavBar />
+                <Container>
+                    <Table size="sm">
+                        {list.map((item, index) => <tr key={item._id} className="lists">
+                            <td className="index">{index+1}</td>
+                            <td className="upvotes"><BsFillCaretUpFill />{item.upvotes}</td>
+                            <td className="title">{item.title}</td>
+                            <td className="txtbody">{item.txt_body}</td>
+                            <td className="comment">{item.comment}</td>
+                            </tr>
+                            )}
+                    </Table>
+                </Container>
             </div>
         );
     }
 }
-
 export default RetrievedData;
