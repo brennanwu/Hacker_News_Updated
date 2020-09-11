@@ -1,5 +1,5 @@
 import React from 'react';
-import RetrievedData from './RetrievedData.js';
+import { Link } from 'react-router-dom'
 
 class Submit extends React.Component {
     constructor(props) { 
@@ -11,23 +11,23 @@ class Submit extends React.Component {
             data: []
         };
         this.handleClick = this.handleClick.bind(this);
-        this.handleClick2 = this.handleClickTwo.bind(this);
+        // this.handleClick2 = this.handleClickTwo.bind(this);
         this.handleTitle = this.handleTitle.bind(this); 
         this.handleTXT = this.handleTXT.bind(this); 
         this.handleURL = this.handleURL.bind(this);
     } 
 
-    async handleClickTwo () { 
-        const save = await fetch('/retrieveSaved');
-        const results_temp = await save.json();
-        const results = await results_temp["results"];
-        console.log(results);
-        // let house = this; 
-        this.setState({ 
-            data : results
+    // async handleClickTwo () { 
+    //     const save = await fetch('/retrieveSaved');
+    //     const results_temp = await save.json();
+    //     const results = await results_temp["results"];
+    //     console.log(results);
+    //     // let house = this; 
+    //     this.setState({ 
+    //         data : results
 
-        });
-    };
+    //     });
+    // };
     
 
     async handleClick() { 
@@ -91,9 +91,8 @@ class Submit extends React.Component {
                     width:"500px", height:"125px", borderRadius:"10px"}} onChange={this.handleTXT}></textarea>   
             </p>
             <button style={{ position:"absolute", top:"250px", left:"50px" }} onClick={this.handleClick} variant="primary">Submit</button>
-            <button style={{ position:"absolute", top:"500px", left:"50px" }} onClick={ () => this.handleClickTwo()} variant="primary"> Retrieve </button>
+            <Link to='/retrieve'><button style={{ position:"absolute", top:"500px", left:"50px" }} > Retrieve </button></Link>
             <p> {this.state.txt}</p>
-            <RetrievedData data={this.state.data}/>
         </div>
         
         );

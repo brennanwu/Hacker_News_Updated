@@ -1,11 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Submit from './Submit.js';
+
+
+import Routes from './routes';
 
 function App() {
   return (
-    <Submit />
+    <Routes />
   );
 }
 
