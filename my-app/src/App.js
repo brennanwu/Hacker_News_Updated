@@ -3,6 +3,7 @@ import './App.css';
 
 
 import Routes from './routes';
+// import Comments from './Comments';
 
 function App() {
   return (

@@ -1,41 +1,39 @@
 import React from 'react';
-import {Row, Col, Container} from 'reactstrap';
-import { Link } from 'react-router-dom'
-
+import { Link } from 'react-router-dom';
 class Submit extends React.Component {
-    constructor(props) { 
-        super(props);
+    constructor() { 
+        super();
         this.state = {
             Title: '',
             Url: '', 
             Text: '',
-            data: []
+            data: [],
+            comment: ''
         };
         this.handleClick = this.handleClick.bind(this);
-        // this.handleClick2 = this.handleClickTwo.bind(this);
+        this.handleClickTwo = this.handleClickTwo.bind(this);
         this.handleClickThree = this.handleClickThree.bind(this);
         // this.handleClickFour = this.handleClickFour.bind(this);
-        this.handleone = this.handleone.bind(this);
+        // this.handleone = this.handleone.bind(this);
         this.handleTitle = this.handleTitle.bind(this); 
         this.commentArea = this.commentArea.bind(this);
         // this.addComments = this.addComments.bind(this);
         this.handleTXT = this.handleTXT.bind(this); 
-        this.one = this.one.bind(this); 
+        this.handleRetrieved = this.handleRetrieved(this);
+        // this.one = this.one.bind(this); 
         this.handleURL = this.handleURL.bind(this);
-    } 
-
-    // async handleClickTwo () { 
-    //     const save = await fetch('/retrieveSaved');
-    //     const results_temp = await save.json();
-    //     const results = await results_temp["results"];
-    //     console.log(results);
-    //     // let house = this; 
-    //     this.setState({ 
-    //         data : results
-
-    //     });
-    // };
-    
+    };
+    async handleClickTwo () { 
+        const save = await fetch('/retrieveSaved');
+        const results_temp = await save.json();
+        const results = await results_temp["results"];
+        console.log(results);
+        // let house = this; 
+        this.setState({ 
+            data : results
+        });
+        console.log(this.state.data);
+    };
     async handleClickThree() { 
         const Options = {
             method: 'POST', 
@@ -97,30 +95,45 @@ class Submit extends React.Component {
     //     const temp = await com.json();
     //     console.log(temp);
     // };
-    async handleone() { 
-        console.log(this.state.Comment);
+    // async handleone() { 
+    //     console.log(this.state.Comment);
+    //     const Options = { 
+    //         method: 'POST', 
+    //         headers: { 
+    //           'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             id: "5f5a54ca90650b068641d4d3",
+    //             comment: this.state.comment
+    //           }),
+    //         json: true
+    //     }
+    //     const save = await fetch('/addComment', Options);
+    //     const results = await save.json(); 
+    //     console.log(results);
+    //         //return console.log("Im in handleClick");
+    //         //get endpoint here to post to mongodb
+    //         //send a json of everything in the text field title and url
+    // };
+    // one(e) { 
+    //     this.setState({
+    //         comment: e.target.value
+    //     });
+    // };
+    async handleRetrieved() { 
         const Options = { 
             method: 'POST', 
             headers: { 
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                id: "5f5a54ca90650b068641d4d3",
-                comment: this.state.comment
+                id: "5f5a54ca90650b068641d4d3"
               }),
             json: true
         }
-        const save = await fetch('/addComment', Options);
+        const save = await fetch('/getPost', Options);
         const results = await save.json(); 
         console.log(results);
-            //return console.log("Im in handleClick");
-            //get endpoint here to post to mongodb
-            //send a json of everything in the text field title and url
-    };
-    one(e) { 
-        this.setState({
-            comment: e.target.value
-        });
     };
     async handleClick() { 
         console.log(this.state.Title);
@@ -160,85 +173,39 @@ class Submit extends React.Component {
             Text: e.target.value
         })
     };
-    
     render() { 
         return ( 
         <div id="reference_this"> 
-            <Container>
-            <Row  style={{marginTop: '30px'}}>
-                <Col>
-                <p > 
+            <p> 
                 Title&nbsp;&nbsp;&nbsp;&nbsp; 
-                 </p>
-                </Col>
-                <Col>
                 <input type="text" style={{ position: 'absolute', 
-                    width:"500px", height:"30px"}} onChange={this.handleTitle}></input>   
-                </Col>
-            </Row>
-
-            <Row>
-           <Col>
-           <p>
+                    width:"500px", height:"10px"}} onChange={this.handleTitle}></input>   
+            </p>
+            <p>
                 url&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" style={{ position: 'absolute', 
+                    width:"500px", height:"10px"}} onChange={this.handleURL}></input>   
             </p>
-           </Col>
-            <Col>
-            <input type="text" style={{ position: 'absolute', 
-                    width:"500px", height:"30px"}} onChange={this.handleURL}></input>   
-            </Col>
-            </Row>
-
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or: 
-
-            <Row>
-                <Col>
-                <p> Text&nbsp;&nbsp;&nbsp;&nbsp; </p>
-                </Col>
-                <Col>
+            <p> Text&nbsp;&nbsp;&nbsp;&nbsp;  
                 <textarea type="text" style={{ position: 'absolute', 
-                    width:"500px", height:"125px", borderRadius:"10px"}} onChange={this.handleTXT}></textarea>  
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                <button style={{position:"absolute", top:"950", left:"350px"}} onClick={ () => this.handleClickThree()} variant="primary"> Upvote </button>
-                </Col>
-            
-            </Row>
-
-            <Row>
-            <button style={{ position:"absolute", top:"250px", left:"50px", marginTop: '40px', marginLeft: '50%'}} onClick={this.handleClick} variant="primary">Submit</button>
-            </Row>
-            
-            <Row>
-            <Link to='/retrieve'><button style={{ position:"absolute", top:"350px", left:"50px", marginLeft: '50%'}} > Retrieve </button></Link>
-            </Row>
-            
-{/*            
-            <Row>
-               <Col>
-               <p style={{marginTop: '270px'}}> 
-                Comment&nbsp;&nbsp;&nbsp;&nbsp; 
+                    width:"500px", height:"125px", borderRadius:"10px"}} onChange={this.handleTXT}></textarea>   
             </p>
-               </Col>
-
-               <Col>
-               <input type="text" style={{ position: 'absolute',top: "250px", 
+            <button style={{position:"absolute", top:"950", left:"50px"}} onClick={ () => this.handleClickThree()} variant="primary"> Upvote </button>
+            <button style={{ position:"absolute", top:"250px", left:"50px" }} onClick={this.handleClick} variant="primary">Submit</button>
+            <Link to='/retrieve'><button style={{ position:"absolute", top:"500px", left:"50px" }} variant="primary"> Retrieve </button></Link>
+            {/* <p> 
+                Comment&nbsp;&nbsp;&nbsp;&nbsp; 
+                <input type="text" style={{ position: 'absolute',top: "300px", 
                     width:"500px", height:"100px"}} onChange={this.one}></input>   
-               </Col>
-           </Row>
-           
-           <Row>
-           <button style={{position:"absolute", top:"600px", left:"50px", marginLeft: '50%'}} onClick={ () => this.handleone()} variant="primary"> Comment </button>
-           </Row> 
+            </p>
+            <button style={{position:"absolute", top:"850px", left:"50px"}} onClick={ () => this.handleone()} variant="primary"> Comment </button>
+​            <button style={{position:"absolute", top:"1050px", left:"50px"}} onClick={this.handleRetrieved} variant="primary"> Retrieving </button> */}
 ​
-            <p> {this.state.txt}</p> */}
-            </Container>
+            <p> {this.state.txt}</p>
         </div>
         
         );
-    }
-}
-
+    };
+};
 export default Submit;

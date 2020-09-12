@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Navbar, NavbarToggler, NavbarBrand, Collapse, Nav, NavItem, NavLink, NavbarText} from 'reactstrap';
+import { Container, Navbar, NavbarToggler, NavbarBrand, Collapse, Nav, NavItem, NavLink} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -24,7 +24,7 @@ const NavBar = (props) => {
                             <NavLink href="#">Past</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="#">Comments</NavLink>
+                            <NavLink href="/comments">Comments</NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink href="#">Ask</NavLink>

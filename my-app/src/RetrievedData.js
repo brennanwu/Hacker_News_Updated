@@ -35,7 +35,7 @@ class RetrievedData extends React.Component  {
                             <td className="upvotes"><BsFillCaretUpFill />{item.upvotes}</td>
                             <td className="title">{item.title}</td>
                             <td className="txtbody">{item.txt_body}</td>
-                            <td className="comment">{item.comment}</td>
+                            {/* <td className="comment">{item.comment}</td> */}
                             </tr>
                             )}
                     </Table>
