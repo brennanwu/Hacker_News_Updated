@@ -20,13 +20,13 @@ const NavBar = (props) => {
                         <NavItem>
                             <NavLink href="#">New</NavLink>
                         </NavItem>
-                        <NavItem>
+                        {/* <NavItem>
                             <NavLink href="#">Past</NavLink>
-                        </NavItem>
+                        </NavItem> */}
                         <NavItem>
                             <NavLink href="/comments">Comments</NavLink>
                         </NavItem>
-                        <NavItem>
+                        {/* <NavItem>
                             <NavLink href="#">Ask</NavLink>
                         </NavItem>
                         <NavItem>
@@ -34,12 +34,12 @@ const NavBar = (props) => {
                         </NavItem>
                         <NavItem>
                             <NavLink href="#">Jobs</NavLink>
-                        </NavItem>
+                        </NavItem> */}
                         <NavItem>
-                            <NavLink href="#">Submit</NavLink>
+                            <NavLink href="/submit">Submit</NavLink>
                         </NavItem>
                     </Nav>
-                    <NavLink href="#" className="login">Login</NavLink>
+                    <NavLink href="/login" className="login">Login</NavLink>
                 </Collapse>
             </Navbar>
            </Container>

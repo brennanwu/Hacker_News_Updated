@@ -39,11 +39,10 @@ class Comments extends React.Component {
 
 
     render() {
-        const item = this.state.comment; 
         return (
             <div>
                 <Container>       
-            
+
             <Row>
                <Col>
                <p style={{marginTop: '270px'}}> 
@@ -58,7 +57,7 @@ class Comments extends React.Component {
            </Row>
            
            <Row>
-           <button style={{position:"absolute", top:"600px", left:"50px", marginLeft: '50%'}} onClick={ () => this.handleone()} variant="primary"> Comment </button>
+           <button style={{position:"absolute", top:"400px", left:"50px", marginLeft: '50%'}} onClick={ () => this.handleone()} variant="primary"> Comment </button>
            </Row> 
 ​
             <p> {this.state.txt}</p>
