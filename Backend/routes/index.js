@@ -130,7 +130,7 @@ app.post('/getPost', (req,res) => {
 });
 app.post('/addComment', (req, res) => { 
       var comment = req.body.comment;
-      var id = req.body.id; 
+      var id = req.body.id["name"]; 
       console.log(comment); 
       async function main() { 
         try { 
