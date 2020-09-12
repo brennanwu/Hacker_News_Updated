@@ -35,10 +35,8 @@ class RetrievedData extends React.Component  {
                         {list.map((item, index) => <tr key={item._id} className="lists">
                             <td className="index">{index+1}</td>
                             <td className="upvotes"><BsFillCaretUpFill />{item.upvotes}</td>
-                            <td className="title"><Link to='/comments' props={item._id}>{item.title}</Link></td>
+                            <td className="title"><Link to={{pathname: '/comments', aboutProps:{name: item._id}}} props={item._id}>{item.title}</Link></td>
                             <td className="txtbody">{item.txt_body}</td>
-                            {/* <td><button>comments</button></Link></td> */}
-                            {/* <td className="comment">{item.comment}</td> */}
                             </tr>
                             )}
                     </Table>

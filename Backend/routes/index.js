@@ -50,26 +50,76 @@ async function updatedComments(client, id, comment) {
       console.log(doc);
   })
 };
-async function findPost(client, id) { 
-  var mongodb = require('mongodb');  
-  var query = {'_id': mongodb.ObjectID(id)};
-    await client.db('HackerNews').collection("Posts").findOne(query, (err, doc) => {
-      if (err) { 
-        console.log(err); 
-      };
-      console.log(doc);
-    });
-}
+
+async function updatePostComponent(client, operator, query, sort, options) { 
+  await client.db('HackerNews').collection("Posts").findAndModify(query, sort, operator, options, (err, doc) => {
+    if (err) { 
+      console.log(err); 
+    };
+    console.log(doc);
+  });
+};
+
+app.post('/updatePost', (req,res) => { 
+    var id = req.body.id['name'];
+    var updatedTitle = req.body.new_title; 
+    console.log("NEW TITLE: " + updatedTitle);
+    var updatedUrl = req.body.new_url; 
+    var updatedText = req.body.new_text;
+    var mongodb = require('mongodb');
+    var query = {'_id': mongodb.ObjectID(id)};
+    var sort = [];
+    var options = {'new' : true};
+    try {
+      if(updatedTitle != "" && updatedTitle != undefined) {
+      var operator = {'$set' : {'title' : updatedTitle }};
+      updatePostComponent(client, operator, query, sort, options);
+    };
+    if(updatedUrl != "" && updatedUrl != undefined) {
+      var operator = {'$set' : {'url_string' : updatedUrl }};
+      updatePostComponent(client, operator, query, sort, options);
+    };
+    if(updatedText != "" && updatedText != undefined) {
+      var operator = {'$set' : {'txt_body' : updatedText }};
+      updatePostComponent(client, operator, query, sort, options);
+    };
+  }
+  catch(e) { 
+    console.log("Failed to Update Post: " + e);
+  }
+});
+
 app.post('/getPost', (req,res) => { 
-    var id = req.body.id;
+    console.log("REQ: " + req.body.id['name']);
+    var id = req.body.id['name'];
     async function main() { 
       try { 
         if (client.isConnected()) { 
-          await findPost(client,id);
+          var mongodb = require('mongodb');  
+          var query = {'_id': mongodb.ObjectID(id)};
+            await client.db('HackerNews').collection("Posts").findOne(query, (err, doc) => {
+              if (err) { 
+                console.log(err); 
+              };
+              console.log(doc);
+              res.json({
+                res: doc
+              });
+            });
         }
         else { 
           await client.connect().catch(error => console.error());
-          await findPost(client,id);
+          var mongodb = require('mongodb');  
+          var query = {'_id': mongodb.ObjectID(id)};
+            await client.db('HackerNews').collection("Posts").findOne(query, (err, doc) => {
+              if (err) { 
+                console.log(err); 
+              };
+              console.log(doc);
+              res.json({
+                res: doc
+              });
+            });
         }
       }
       catch(e) { 
@@ -172,7 +222,7 @@ app.get('/retrieveSaved', (req, res) => {
   main().catch(console.error);
 })
 app.post('/deleteList', (req, res) => { 
-  id = req.body.id;
+  id = req.body.id['name'];
   console.log(id);
   async function main() { 
     try { 
