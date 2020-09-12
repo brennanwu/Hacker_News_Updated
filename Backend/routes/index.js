@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 const {MongoClient} = require('mongodb');
 const uri = 'mongodb+srv://aman0501:amanrizvi1@cluster0.fuhiw.mongodb.net/<dbname>?retryWrites=true&w=majority'
 const client = new MongoClient(uri);
-var mongoObj = require('mongodb').ObjectID;
+
 //newListing is the document to insert 
 async function createListing(client, newListing) { 
   await client.db('HackerNews').collection("Posts").insertOne(newListing); 
@@ -36,6 +36,7 @@ async function updatedPosting(client, id) {
       console.log(doc);
   })
 };
+
 async function updatedComments(client, id, comment) { 
   //comment is going to be an array
   var mongodb = require('mongodb');
@@ -220,9 +221,9 @@ app.get('/retrieveSaved', (req, res) => {
     }
   }
   main().catch(console.error);
-})
+});
 app.post('/deleteList', (req, res) => { 
-  id = req.body.id['name'];
+  var id = req.body.id['name'];
   console.log(id);
   async function main() { 
     try { 
@@ -239,7 +240,85 @@ app.post('/deleteList', (req, res) => {
     }
   }
   main().catch(console.error);
-})
+});
+
+async function createListing2(client, newListing) { 
+  await client.db('registereduser').collection("db").insertOne(newListing); 
+};
+
+app.post('/login', (req, res) => { 
+    var email = req.body.Email; 
+    var password = req.body.Pass;
+    try { 
+      async function main() { 
+        await client.connect();
+        var query = {'email': email};
+        await client.db('registereduser').collection("db").findOne(query, (err, doc) => {
+          if (err) { 
+            console.log(err); 
+          }
+          console.log(doc);
+          if(doc == null) {
+            res.json({ 
+              ERROR: "THIS EMAIL DOES NOT EXIST"
+            })
+          }
+          else{ 
+            if(doc["password"] != password) {
+              res.json({ 
+                ERROR: "WRONG PASSWORD"
+              });
+            }
+            else { 
+              res.json({ 
+                PASSED: "YOU ARE NOW SIGNED IN"
+              })
+            }
+          };
+        });
+      }
+      main().catch(console.error);
+    }
+    catch(e) { 
+      res.send(e);
+    }
+  });
+
+  async function retrieveAllSaved2(client) { 
+    const result = await client.db('registereduser').collection("db").find({}).toArray();
+    return result;
+  };
+
+  app.post('/signUp', (req, res) => { 
+    var email = req.body.Email; 
+    var password = req.body.Pass;
+
+    async function main() { 
+      await client.connect();
+      var query = {'email': email};
+  
+      await client.db('registereduser').collection("db").findOne(query, (err, doc) => {
+          if(err) { 
+            console.log(err);
+          }
+          if(doc == null) {
+            //this is valid
+            createListing2(client, {email: email, password:password});
+            var answer = retrieveAllSaved2(client);
+            res.json({ 
+              answers: answer
+            })
+          }
+          else { 
+            res.json({ 
+              ERROR: "USER ALREADY EXISTS"
+            });
+          }
+      });
+    };
+    main().catch(console.error);
+  });
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
